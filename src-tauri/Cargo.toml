@@ -23,3 +23,31 @@ serde = { version = "1.0", features = ["derive"] }
 log = "0.4"
 tauri = { version = "2.8.5", features = [] }
 tauri-plugin-log = "2"
+
+# 数据库相关
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "sqlite", "chrono", "uuid"] }
+
+# 异步运行时
+tokio = { version = "1.0", features = ["full"] }
+
+# 日志系统  
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# 时间处理
+chrono = { version = "0.4", features = ["serde"] }
+
+# UUID生成
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# 路径处理
+path-absolutize = "3.0"
+
+# 进程管理
+which = "6.0"
+
+# 加密相关
+sha2 = "0.10"
+
+# 正则表达式
+regex = "1.0"
