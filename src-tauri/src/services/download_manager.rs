@@ -225,7 +225,7 @@ impl DownloadManager {
             .await;
 
         match download_result {
-            Ok((install_path, actual_version)) => {
+            Ok((install_path, executable_path, actual_version)) => {
                 let install_path: std::path::PathBuf = install_path;
                 let actual_version: String = actual_version;
                 // 下载完成，更新任务状态和获取完整的浏览器信息
@@ -237,9 +237,13 @@ impl DownloadManager {
                         task.browser_info.install_path = install_path.clone();
                         task.browser_info.version = actual_version.clone(); // 使用实际版本号
                         
-                        // 尝试找到可执行文件
-                        let executable_path = Self::find_executable(&install_path, &browser_info.browser_type);
-                        task.browser_info.executable_path = executable_path;
+                        // 使用从Node.js脚本获取的可执行文件路径，或者推导一个
+                        let exec_path = if let Some(exec_path) = &executable_path {
+                            exec_path.clone()
+                        } else {
+                            Self::find_executable(&install_path, &browser_info.browser_type)
+                        };
+                        task.browser_info.executable_path = exec_path;
                         
                         // 设置文件大小为下载的总字节数
                         task.browser_info.file_size = task.total_bytes;
@@ -251,7 +255,12 @@ impl DownloadManager {
                         let mut info = browser_info.clone();
                         info.install_path = install_path.clone();
                         info.version = actual_version.clone();
-                        info.executable_path = Self::find_executable(&install_path, &browser_info.browser_type);
+                        let exec_path = if let Some(exec_path) = &executable_path {
+                            exec_path.clone()
+                        } else {
+                            Self::find_executable(&install_path, &browser_info.browser_type)
+                        };
+                        info.executable_path = exec_path;
                         info
                     }
                 };

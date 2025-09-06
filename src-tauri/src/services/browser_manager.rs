@@ -93,7 +93,9 @@ impl BrowserManager {
 
         // 检查可执行文件是否存在
         if !browser.executable_path.exists() {
-            return Err("Browser executable not found".to_string());
+            let path_str = browser.executable_path.to_string_lossy();
+            tracing::error!("Browser executable not found at path: {}", path_str);
+            return Err(format!("Browser executable not found at path: {}", path_str));
         }
 
         // 构建启动命令

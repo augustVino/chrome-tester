@@ -88,7 +88,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     try {
       // 更新主题
       if (form.theme !== theme) {
-        setTheme(form.theme === 'system' ? 'light' : form.theme);
+        setTheme(form.theme);
       }
 
       // 更新应用配置
@@ -156,27 +156,50 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   };
 
   const handleClearAllBrowsers = async () => {
-    if (!confirm('确定要清除所有浏览器数据吗？\n\n此操作将删除所有已下载的浏览器版本及其文件，该操作不可撤销。')) {
-      return;
-    }
-    
-    setIsLoading(true);
+    console.log('清除数据按钮被点击');
     
     try {
-      await clearAllBrowsers();
-      addNotification({
-        type: 'success',
-        title: '清除成功',
-        message: '所有浏览器数据已被清除，现在可以重新下载浏览器版本'
-      });
+      // 使用 Tauri 官方的 confirm 对话框
+      const { confirm } = await import('@tauri-apps/plugin-dialog');
+      const confirmed = await confirm(
+        '此操作将删除所有已下载的浏览器版本及其文件，该操作不可撤销。',
+        { title: '确认清除数据', kind: 'warning' }
+      );
+      
+      if (!confirmed) {
+        console.log('用户取消了清除操作');
+        return;
+      }
+      
+      console.log('用户确认清除操作');
+      setIsLoading(true);
+      
+      try {
+        console.log('开始清除所有浏览器数据');
+        await clearAllBrowsers();
+        console.log('清除操作成功完成');
+        addNotification({
+          type: 'success',
+          title: '清除成功',
+          message: '所有浏览器数据已被清除，现在可以重新下载浏览器版本'
+        });
+      } catch (error) {
+        console.error('清除操作失败:', error);
+        addNotification({
+          type: 'error',
+          title: '清除失败',
+          message: error instanceof Error ? error.message : '清除数据时发生错误'
+        });
+      } finally {
+        setIsLoading(false);
+      }
     } catch (error) {
+      console.error('无法显示确认对话框:', error);
       addNotification({
         type: 'error',
-        title: '清除失败',
-        message: error instanceof Error ? error.message : '清除数据时发生错误'
+        title: '错误',
+        message: '无法显示确认对话框，请重试'
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -197,7 +220,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
     >
       <div className="flex h-96">
         {/* 左侧标签页 */}
-        <div className="w-48 border-r border-gray-200 pr-4">
+        <div className="w-48 border-r border-gray-200 dark:border-gray-700 pr-4">
           <nav className="space-y-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -207,8 +230,8 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   onClick={() => setActiveTab(tab.key as any)}
                   className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     activeTab === tab.key
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800'
                   }`}
                 >
                   <Icon className="mr-3 h-4 w-4" />

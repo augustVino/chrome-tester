@@ -11,7 +11,7 @@ interface UIState {
   viewMode: 'grid' | 'list';
   
   // 主题和界面
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'system';
   sidebarCollapsed: boolean;
   
   // 选中状态
@@ -125,7 +125,14 @@ export const useUIStore = create<UIStore>()(
         
         // Update document class for theme
         if (typeof document !== 'undefined') {
-          document.documentElement.classList.toggle('dark', theme === 'dark');
+          let isDark = theme === 'dark';
+          
+          // Handle system theme
+          if (theme === 'system') {
+            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+          
+          document.documentElement.classList.toggle('dark', isDark);
         }
       },
 

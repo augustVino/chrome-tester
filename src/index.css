@@ -49,9 +49,10 @@
 
 @layer base {
   body {
-    background-color: white;
-    color: rgb(34 34 34);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   html {

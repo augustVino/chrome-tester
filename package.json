@@ -13,6 +13,7 @@
     "@puppeteer/browsers": "^2.10.8",
     "@tailwindcss/vite": "^4.1.13",
     "@tauri-apps/api": "^2.8.0",
+    "@tauri-apps/plugin-dialog": "^2.4.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "immer": "^10.1.3",

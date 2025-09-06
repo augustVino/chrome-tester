@@ -118,9 +118,39 @@ async function downloadBrowser() {
       }
     });
 
-    console.log(`COMPLETED:${installPath}`);
+    // 从installPath对象获取正确的路径信息
+    let installDir = '';
+    let executablePath = '';
+    
+    if (typeof installPath === 'object' && installPath !== null) {
+        executablePath = installPath.executablePath || '';
+        
+        // 从可执行文件路径推导安装目录
+        // 例: /path/to/browsers/chrome/mac_arm-120.0.6099.109/chrome-mac-arm64/Google Chrome.app/Contents/MacOS/Google Chrome
+        // 安装目录应该是: /path/to/browsers/chrome/mac_arm-120.0.6099.109
+        if (executablePath) {
+            const parts = executablePath.split('/');
+            // 找到包含版本号的目录层级
+            const versionDirIndex = parts.findIndex(part => part.includes(buildId));
+            if (versionDirIndex !== -1) {
+                installDir = parts.slice(0, versionDirIndex + 1).join('/');
+            } else {
+                // 备用方案：使用chrome-mac-arm64的父目录
+                const chromeDirIndex = parts.findIndex(part => part.startsWith('chrome-mac'));
+                if (chromeDirIndex !== -1) {
+                    installDir = parts.slice(0, chromeDirIndex).join('/');
+                }
+            }
+        }
+    }
+    
+    // 如果没有找到合适的安装目录，使用executablePath
+    const finalInstallPath = installDir || executablePath || String(installPath);
+    
+    console.log(`COMPLETED:${finalInstallPath}`);
+    console.log(`EXECUTABLE:${executablePath}`);
     console.log(`VERSION:${buildId}`);
-    console.log(`INFO:Browser installed successfully at: ${installPath}`);
+    console.log(`INFO:Browser installed successfully at: ${finalInstallPath}`);
     
     process.exit(0);
   } catch (error) {

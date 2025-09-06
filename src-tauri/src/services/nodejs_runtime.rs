@@ -76,7 +76,7 @@ impl NodejsRuntime {
         version: &str,
         platform: &str,
         progress_callback: ProgressCallback,
-    ) -> Result<(PathBuf, String), String> {
+    ) -> Result<(PathBuf, Option<PathBuf>, String), String> {
         // 使用项目中的下载脚本
         let script_path = self.get_script_path("download-browser.js")?;
 
@@ -102,6 +102,7 @@ impl NodejsRuntime {
         let mut stderr_reader = BufReader::new(stderr).lines();
 
         let mut install_path = None;
+        let mut executable_path = None;
         let mut actual_version = version.to_string(); // 默认使用输入的版本号
 
         // 启动一个任务来读取stderr并记录错误
@@ -120,7 +121,13 @@ impl NodejsRuntime {
             } else if line.starts_with("COMPLETED:") {
                 // 解析完成信息
                 let path_str = line.strip_prefix("COMPLETED:").unwrap_or("").trim();
+                tracing::info!("Node.js script output COMPLETED path: {}", path_str);
                 install_path = Some(PathBuf::from(path_str));
+            } else if line.starts_with("EXECUTABLE:") {
+                // 解析可执行文件路径
+                let exec_path_str = line.strip_prefix("EXECUTABLE:").unwrap_or("").trim();
+                tracing::info!("Node.js script output EXECUTABLE path: {}", exec_path_str);
+                executable_path = Some(PathBuf::from(exec_path_str));
             } else if line.starts_with("VERSION:") {
                 // 解析实际版本号
                 let version_str = line.strip_prefix("VERSION:").unwrap_or("").trim();
@@ -147,7 +154,7 @@ impl NodejsRuntime {
 
         if status.success() {
             if let Some(path) = install_path {
-                Ok((path, actual_version))
+                Ok((path, executable_path, actual_version))
             } else {
                 Err("Download completed but install path not found".to_string())
             }

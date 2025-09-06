@@ -19,6 +19,7 @@ pub fn run() {
                 .level(log::LevelFilter::Info)
                 .build(),
         )
+        .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
             // 异步初始化应用状态
             let handle = app.handle().clone();
@@ -44,6 +45,7 @@ pub fn run() {
             commands::list_browsers,
             commands::download_browser,
             commands::delete_browser,
+            commands::clear_all_browsers,
             commands::open_browser,
             commands::get_browser_info,
             // 下载管理命令
