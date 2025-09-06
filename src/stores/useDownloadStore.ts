@@ -67,8 +67,8 @@ export const useDownloadStore = create<DownloadStore>()(
             progress: 0.0,
             downloaded_bytes: 0,
             total_bytes: 0,
-            estimated_time_remaining: null,
-            error_message: null,
+            estimated_time_remaining: undefined,
+            error_message: undefined,
             retry_count: 0
           };
           

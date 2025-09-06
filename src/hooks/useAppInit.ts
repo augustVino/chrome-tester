@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
-import { useAppStore, useBrowserStore, useDownloadStore, useUIStore } from '../stores';
+import { useAppStore, useBrowserStore, useDownloadStore } from '../stores';
 
 export function useAppInit() {
   const initializeApp = useAppStore(state => state.initializeApp);
   const fetchBrowsers = useBrowserStore(state => state.fetchBrowsers);
   const fetchDownloadTasks = useDownloadStore(state => state.fetchDownloadTasks);
-  const theme = useUIStore(state => state.theme);
   const isInitialized = useAppStore(state => state.isInitialized);
 
   useEffect(() => {
-    // Apply theme on mount
+    // 确保使用浅色模式，移除dark类
     if (typeof document !== 'undefined') {
-      document.documentElement.classList.toggle('dark', theme === 'dark');
+      document.documentElement.classList.remove('dark');
     }
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
     let mounted = true;

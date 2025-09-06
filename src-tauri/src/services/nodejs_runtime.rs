@@ -56,6 +56,7 @@ impl NodejsRuntime {
                 // 验证 Node.js 版本
                 let output = Command::new(&path)
                     .arg("--version")
+                    .env("NODE_OPTIONS", "")
                     .output()
                     .await?;
                 
@@ -82,6 +83,9 @@ impl NodejsRuntime {
 
         // 执行下载脚本
         let mut cmd = Command::new(&self.node_path)
+            .arg("--no-deprecation")
+            .arg("--disable-proto=delete")
+            .arg("--no-warnings")
             .arg(&script_path)
             .arg("--browser")
             .arg(browser_type)
@@ -89,6 +93,7 @@ impl NodejsRuntime {
             .arg(version)
             .arg("--platform")
             .arg(platform)
+            .env("NODE_OPTIONS", "")
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
@@ -183,9 +188,11 @@ impl NodejsRuntime {
         let script_path = self.get_script_path("list-versions.js")?;
 
         let output = Command::new(&self.node_path)
+            .arg("--no-warnings")
             .arg(&script_path)
             .arg("--browser")
             .arg(browser_type)
+            .env("NODE_OPTIONS", "")
             .output()
             .await
             .map_err(|e| format!("Failed to execute Node.js: {}", e))?;
@@ -205,6 +212,7 @@ impl NodejsRuntime {
         let script_path = self.get_script_path("check-installation.js")?;
 
         let output = Command::new(&self.node_path)
+            .arg("--no-warnings")
             .arg(&script_path)
             .arg("--browser")
             .arg(browser_type)
@@ -212,6 +220,7 @@ impl NodejsRuntime {
             .arg(version)
             .arg("--platform")
             .arg(platform)
+            .env("NODE_OPTIONS", "")
             .output()
             .await
             .map_err(|e| format!("Failed to execute Node.js: {}", e))?;
@@ -232,6 +241,7 @@ impl NodejsRuntime {
         let script_path = self.get_script_path("uninstall-browser.js")?;
 
         let output = Command::new(&self.node_path)
+            .arg("--no-warnings")
             .arg(&script_path)
             .arg("--browser")
             .arg(browser_type)
@@ -239,6 +249,7 @@ impl NodejsRuntime {
             .arg(version)
             .arg("--platform")
             .arg(platform)
+            .env("NODE_OPTIONS", "")
             .output()
             .await
             .map_err(|e| format!("Failed to execute Node.js: {}", e))?;

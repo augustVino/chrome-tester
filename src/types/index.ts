@@ -64,26 +64,14 @@ export interface UIState {
   sortBy: 'version' | 'date' | 'name';
   sortOrder: 'asc' | 'desc';
   viewMode: 'grid' | 'list';
-  theme: 'light' | 'dark';
   isLoading: boolean;
   error: string | null;
 }
 
 export interface AppConfig {
   downloadPath?: string;
-  autoCleanup?: boolean;
-  maxConcurrentDownloads?: number;
-  proxySettings?: ProxySettings;
-  notifications?: boolean;
 }
 
-export interface ProxySettings {
-  enabled: boolean;
-  host?: string;
-  port?: number;
-  username?: string;
-  password?: string;
-}
 
 // 通知相关类型
 export interface Notification {

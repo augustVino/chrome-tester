@@ -48,16 +48,16 @@ export function BrowserCard({
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:shadow-md transition-all duration-200">
+    <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200">
       {/* 头部信息 */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
           {getBrowserIcon(browser.browser_type)}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+            <h3 className="font-semibold text-gray-900">
               {browser.browser_type}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-gray-500">
               v{browser.version}
             </p>
           </div>
@@ -68,21 +68,21 @@ export function BrowserCard({
       {/* 详细信息 */}
       <div className="space-y-2 mb-4">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-500 dark:text-gray-400">平台:</span>
-          <span className="text-gray-900 dark:text-gray-100">{browser.platform}</span>
+          <span className="text-gray-500">平台:</span>
+          <span className="text-gray-900">{browser.platform}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-500 dark:text-gray-400">大小:</span>
-          <span className="text-gray-900 dark:text-gray-100">{formatFileSize(browser.file_size)}</span>
+          <span className="text-gray-500">大小:</span>
+          <span className="text-gray-900">{formatFileSize(browser.file_size)}</span>
         </div>
         <div className="flex justify-between text-sm">
-          <span className="text-gray-500 dark:text-gray-400">安装时间:</span>
-          <span className="text-gray-900 dark:text-gray-100">{formatDate(browser.download_date)}</span>
+          <span className="text-gray-500">安装时间:</span>
+          <span className="text-gray-900">{formatDate(browser.download_date)}</span>
         </div>
       </div>
 
       {/* 操作按钮 */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
+      <div className="flex items-center justify-between pt-3 border-t border-gray-100">
         <div className="flex space-x-2">
           <Button
             size="sm"

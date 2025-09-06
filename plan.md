@@ -171,7 +171,6 @@ interface AppState {
     sortBy: 'version' | 'date' | 'name';
     sortOrder: 'asc' | 'desc';
     viewMode: 'grid' | 'list';
-    theme: 'light' | 'dark';
   };
   app: {
     isLoading: boolean;
@@ -339,7 +338,6 @@ impl Database {
 2. **基础组件开发**
    - 创建Layout组件和基础UI组件
    - 实现响应式布局框架
-   - 设置主题切换基础架构
 
 3. **状态管理设置**
    - 配置Zustand Store结构
@@ -416,7 +414,6 @@ impl Database {
 1. **配置管理**
    - 实现应用设置界面
    - 添加启动参数配置
-   - 支持代理设置
 
 2. **系统集成**
    - 实现系统通知

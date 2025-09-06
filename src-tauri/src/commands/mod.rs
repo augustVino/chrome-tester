@@ -109,11 +109,14 @@ pub async fn get_available_versions(
     // 这里可以扩展为从多个源获取版本信息
     // 目前使用 Node.js 运行时获取
     Ok(vec![
-        "120.0.6099.109".to_string(),
-        "119.0.6045.105".to_string(),
-        "118.0.5993.70".to_string(),
-        "117.0.5938.92".to_string(),
-        "116.0.5845.96".to_string(),
+        "stable".to_string(),
+        "131".to_string(),
+        "130".to_string(),
+        "129".to_string(),
+        "128".to_string(),
+        "127".to_string(),
+        "126".to_string(),
+        "125".to_string(),
     ])
 }
 

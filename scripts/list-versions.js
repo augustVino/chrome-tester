@@ -50,52 +50,52 @@ async function listVersions() {
       // 返回常用的Chrome版本列表（因为@puppeteer/browsers没有提供获取所有可用版本的API）
       const commonVersions = [
         {
-          version: '121.0.6167.85',
-          platform: 'win64',
+          version: 'stable',
+          platform: 'auto',
           stable: true,
-          release_date: '2024-01-23'
+          release_date: '2025-09-06'
         },
         {
-          version: '120.0.6099.109',
-          platform: 'win64',
+          version: '131',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-12-06'
+          release_date: '2024-11-01'
         },
         {
-          version: '119.0.6045.105',
-          platform: 'win64',
+          version: '130',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-10-31'
+          release_date: '2024-10-01'
         },
         {
-          version: '118.0.5993.70',
-          platform: 'win64',
+          version: '129',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-10-10'
+          release_date: '2024-09-01'
         },
         {
-          version: '117.0.5938.92',
-          platform: 'win64',
+          version: '128',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-09-12'
+          release_date: '2024-08-01'
         },
         {
-          version: '116.0.5845.96',
-          platform: 'win64',
+          version: '127',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-08-15'
+          release_date: '2024-07-01'
         },
         {
-          version: '115.0.5790.102',
-          platform: 'win64',
+          version: '126',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-07-18'
+          release_date: '2024-06-01'
         },
         {
-          version: '114.0.5735.90',
-          platform: 'win64',
+          version: '125',
+          platform: 'auto',
           stable: true,
-          release_date: '2023-05-30'
+          release_date: '2024-05-01'
         }
       ];
       

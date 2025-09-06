@@ -32,7 +32,7 @@ export function Layout({
   onDownloadAction
 }: LayoutProps) {
   return (
-    <div className="flex flex-col h-screen bg-white">
+    <div className="flex flex-col h-screen bg-background">
       {/* 头部 */}
       <Header
         searchQuery={searchQuery}

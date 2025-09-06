@@ -10,8 +10,7 @@ interface UIState {
   sortOrder: 'asc' | 'desc';
   viewMode: 'grid' | 'list';
   
-  // 主题和界面
-  theme: 'light' | 'dark' | 'system';
+  // 界面
   sidebarCollapsed: boolean;
   
   // 选中状态
@@ -42,8 +41,7 @@ interface UIActions {
   setSortOrder: (order: UIState['sortOrder']) => void;
   setViewMode: (mode: UIState['viewMode']) => void;
   
-  // 主题和界面
-  setTheme: (theme: UIState['theme']) => void;
+  // 界面
   toggleSidebar: () => void;
   
   // 选中状态
@@ -78,7 +76,6 @@ export const useUIStore = create<UIStore>()(
       sortBy: 'date',
       sortOrder: 'desc',
       viewMode: 'grid',
-      theme: 'light',
       sidebarCollapsed: false,
       selectedBrowser: null,
       selectedTasks: [],
@@ -116,24 +113,6 @@ export const useUIStore = create<UIStore>()(
         set((state) => {
           state.viewMode = mode;
         });
-      },
-
-      setTheme: (theme) => {
-        set((state) => {
-          state.theme = theme;
-        });
-        
-        // Update document class for theme
-        if (typeof document !== 'undefined') {
-          let isDark = theme === 'dark';
-          
-          // Handle system theme
-          if (theme === 'system') {
-            isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          }
-          
-          document.documentElement.classList.toggle('dark', isDark);
-        }
       },
 
       toggleSidebar: () => {
@@ -249,7 +228,6 @@ export const useUIStore = create<UIStore>()(
         sortBy: state.sortBy,
         sortOrder: state.sortOrder,
         viewMode: state.viewMode,
-        theme: state.theme,
         sidebarCollapsed: state.sidebarCollapsed,
       }),
     }

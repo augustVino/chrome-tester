@@ -34,7 +34,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* 背景遮罩 */}
       <div 
-        className="fixed inset-0 bg-black bg-opacity-30 transition-opacity"
+        className="fixed inset-0 bg-black/5 transition-opacity"
         onClick={onClose}
       />
       

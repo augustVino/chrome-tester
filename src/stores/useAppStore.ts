@@ -23,13 +23,7 @@ interface AppActions {
 type AppStore = AppState & AppActions;
 
 const defaultConfig: AppConfig = {
-  downloadPath: '',
-  autoCleanup: true,
-  maxConcurrentDownloads: 3,
-  notifications: true,
-  proxySettings: {
-    enabled: false,
-  }
+  downloadPath: ''
 };
 
 export const useAppStore = create<AppStore>()(
